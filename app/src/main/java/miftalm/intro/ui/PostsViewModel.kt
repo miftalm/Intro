@@ -2,23 +2,18 @@ package miftalm.intro.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import miftalm.intro.data.PostApi
-import miftalm.intro.data.PostRepositoryImpl
+import miftalm.intro.domain.PostRepository
 import miftalm.intro.ui.state.PostsState
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class PostsViewModel: ViewModel() {
-    private val repository = PostRepositoryImpl(
-        Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(PostApi::class.java)
-    )
+@HiltViewModel
+class PostsViewModel @Inject constructor(
+    private val repository: PostRepository
+): ViewModel() {
 
     private val _state = MutableStateFlow< PostsState>(PostsState.Loading)
     val state: StateFlow<PostsState> = _state

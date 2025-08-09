@@ -15,11 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import miftalm.intro.domain.Post
 import miftalm.intro.ui.state.PostsState
 
 @Composable
-fun PostsScreen(viewModel: PostsViewModel) {
+fun PostsScreen(viewModel: PostsViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsState()
 
     when(val currentState = state) {
